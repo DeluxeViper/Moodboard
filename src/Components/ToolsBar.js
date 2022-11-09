@@ -1,5 +1,7 @@
+/** @format */
+
 import React from "react";
-import { tools } from '../Data/tools';
+import { tools } from "../Data/tools";
 
 // list of tools imported from /Data/tools.js
 
@@ -13,16 +15,12 @@ function ToolsBar(props) {
               className="toolsItem"
               key={i}
               onClick={() => {
-                props.changeSelectedTool(i)
+                props.changeSelectedTool(i);
               }}
-              >
+            >
               <div className="toolsItemContent">
-                <span className="toolIcon">
-                  {tool.icon}
-                </span>
-                <span className="toolTitle">
-                  {tool.title}
-                </span>
+                <span className="toolIcon">{tool.icon}</span>
+                <span className="toolTitle">{tool.title}</span>
               </div>
             </div>
           ))}
