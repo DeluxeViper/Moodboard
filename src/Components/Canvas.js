@@ -24,6 +24,7 @@ const Canvas = () => {
   const containerRef = useRef();
   // dragUrl stores temporary src of dragged image
   const [dragUrl, setDragUrl] = useState();
+  const [dragId, setDragId] = useState();
   // images stores images that are added to canvas
   const [images, setImages] = useState([]);
   // backgroundImage is used for setting backgroundImage of canvas
@@ -59,8 +60,9 @@ const Canvas = () => {
   };
 
   // when element is dragged pass its image src to allow it for adding it to canvas
-  const onChangeDragUrl = (dragUrl) => {
+  const onChangeDragUrl = (dragUrl, id) => {
     setDragUrl(dragUrl);
+    setDragId(id);
   };
 
   // update image attributes when performing resize
@@ -74,7 +76,7 @@ const Canvas = () => {
   };
 
   // function to handle adding images on drag and drop to canvas
-  const handleOnDrop = (e) => {
+  const handleOnDrop = (e, id) => {
     e.preventDefault();
     stageRef.current.setPointersPositions(e);
     setImages(
@@ -82,13 +84,20 @@ const Canvas = () => {
         {
           ...stageRef.current.getPointerPosition(),
           src: dragUrl,
+          id: dragId,
         },
       ])
     );
   };
 
+  // Removes image
+  const handleOnDelete = (imgSrc) => {
+    const newImages = images.filter((image) => image.src !== imgSrc);
+    setImages(newImages);
+  };
+
   // function to handle adding images on click
-  const handleAddOnClick = (src) => {
+  const handleAddOnClick = (src, id) => {
     let centerX = stageDimensions.width / 2;
     let centerY = stageDimensions.height / 2;
     setImages(
@@ -97,6 +106,7 @@ const Canvas = () => {
           x: centerX,
           y: centerY,
           src: src,
+          id: id,
         },
       ])
     );
@@ -112,15 +122,6 @@ const Canvas = () => {
     setBackgroundImage(null);
   };
 
-  // used for passing image id to image attributes
-  const passImageWithId = (image, id) => {
-    const imageWithId = {
-      ...image,
-      id: id,
-    };
-    return imageWithId;
-  };
-
   // when sidebar state changes this function is being called
   const resizeCanvasOnSidebarChange = () => {
     // wait for sidebar animation to complete
@@ -128,6 +129,34 @@ const Canvas = () => {
       handleResize();
     }, 420);
   };
+
+  const onSelected = (e, id) => {
+    setSelectedId(id);
+    e.target.moveToTop();
+    setImages((images) => {
+      const newImages = images.slice();
+      const img = images.find((i) => id === i.id);
+      const index = images.indexOf(img);
+      newImages.splice(index, 1);
+      newImages.push(img);
+      return newImages;
+    });
+  };
+
+  const handleDragStart = (e, id) => {
+    setSelectedId(id);
+    e.target.moveToTop();
+    setImages((images) => {
+      const newImages = images.slice();
+      const img = images.find((i) => id === i.id);
+      const index = images.indexOf(img);
+      newImages.splice(index, 1);
+      newImages.push(img);
+      return newImages;
+    });
+  };
+
+  const handleDragEnd = (e) => {};
 
   return (
     <div className="workContainer">
@@ -173,16 +202,17 @@ const Canvas = () => {
                 return (
                   <ImageComponent
                     image={image}
-                    shapeProps={passImageWithId(image, `image${i}`)}
-                    id={`image${i}`}
-                    key={i}
-                    isSelected={i === selectedId}
-                    onSelect={() => {
-                      setSelectedId(i);
-                    }}
+                    shapeProps={image}
+                    id={image?.id}
+                    key={image?.id}
+                    isSelected={image?.id === selectedId}
+                    onSelect={(e) => onSelected(e, image?.id)}
+                    handleDragStart={(e) => handleDragStart(e, image?.id)}
+                    handleDragEnd={handleDragEnd}
                     onChange={(newAttrs) => {
                       handleTransformChange(newAttrs, i);
                     }}
+                    handleOnDelete={handleOnDelete}
                   />
                 );
               })}

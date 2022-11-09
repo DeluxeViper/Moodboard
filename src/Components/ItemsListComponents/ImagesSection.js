@@ -82,11 +82,11 @@ const ImagesSection = (props) => {
               draggable="true"
               // elementCategory="All"
               onDragStart={(e) => {
-                props.onChangeDragUrl(e.target.src);
+                props.onChangeDragUrl(e.target.src, item.id);
               }}
               onClick={(e) => {
                 console.log(e.target);
-                props.handleAddOnClick(e.target.src);
+                props.handleAddOnClick(e.target.src, item.id);
               }}
             />
           </div>
