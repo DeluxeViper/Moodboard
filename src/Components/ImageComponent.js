@@ -3,7 +3,6 @@
 import React, { useRef, useEffect, Fragment } from "react";
 import { Image, Path, Transformer } from "react-konva";
 import useImage from "use-image";
-import DeleteIcon from "@mui/icons-material/Delete";
 // image component that contains various event handlers
 // image component is used for passing it to Konva canvas
 
