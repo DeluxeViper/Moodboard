@@ -1,6 +1,8 @@
-import PhotoIcon from '@mui/icons-material/Photo';
+/** @format */
+
+import PhotoIcon from "@mui/icons-material/Photo";
 import UploadFileRoundedIcon from "@mui/icons-material/UploadFileRounded";
-import WallpaperIcon from '@mui/icons-material/Wallpaper';
+import WallpaperIcon from "@mui/icons-material/Wallpaper";
 import IosShareRoundedIcon from "@mui/icons-material/IosShareRounded";
 // below is list of components that appear in sidebar
 // id - unique id
@@ -16,18 +18,12 @@ export const tools = [
   },
   {
     id: 1,
-    title: "Backgrounds",
-    icon: <WallpaperIcon />,
-    component: "backgroundsSection",
-  },
-  {
-    id: 2,
     title: "Uploads",
     icon: <UploadFileRoundedIcon />,
     component: "uploadSection",
   },
   {
-    id: 3,
+    id: 2,
     title: "Share",
     icon: <IosShareRoundedIcon />,
     component: "shareSection",

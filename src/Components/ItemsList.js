@@ -5,7 +5,6 @@ import "./Styles/itemsList.css";
 import { tools } from "../Data/tools";
 
 import ImagesSection from "./ItemsListComponents/ImagesSection";
-import BackgroundsSection from "./ItemsListComponents/BackgroundsSection";
 import UploadSection from "./ItemsListComponents/UploadSection";
 import ShareSection from "./ItemsListComponents/ShareSection";
 import ToolsBar from "./ToolsBar";
@@ -17,7 +16,6 @@ const ItemsList = (props) => {
   // componentsMap keys must be same with components key value in /Data/tools.js
   const componentsMap = {
     imagesSection: ImagesSection,
-    backgroundsSection: BackgroundsSection,
     uploadSection: UploadSection,
     shareSection: ShareSection,
   };

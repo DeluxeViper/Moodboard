@@ -6,11 +6,12 @@ import "./Styles/canvas.css";
 import ItemsList from "./ItemsList";
 import ImageComponent from "./ImageComponent";
 import CanvasBackground from "./CanvasBackground";
+import { Button } from "@mui/material";
 
-const Canvas = () => {
+const MoodBoard = () => {
   // static canvas dimensions used for scaling ratio
-  const stageWidth = 2000,
-    stageHeight = 2000;
+  const stageWidth = 2500,
+    stageHeight = 2500;
   // dynamic canvas dimensions
   const [stageDimensions, setStageDimensions] = useState({
     width: stageWidth,
@@ -28,7 +29,7 @@ const Canvas = () => {
   // images stores images that are added to canvas
   const [images, setImages] = useState([]);
   // backgroundImage is used for setting backgroundImage of canvas
-  const [backgroundImage, setBackgroundImage] = useState();
+  // const [backgroundImage, setBackgroundImage] = useState();
   // selectedId is used for keeping selected image to handle resizes, z-index priority etc.
   const [selectedId, setSelectedId] = useState(null);
 
@@ -113,14 +114,14 @@ const Canvas = () => {
   };
 
   // function to handle adding background image of canvas
-  const addToBackground = (backgroundUrl) => {
-    setBackgroundImage(backgroundUrl);
-  };
+  // const addToBackground = (backgroundUrl) => {
+  //   setBackgroundImage(backgroundUrl);
+  // };
 
-  // function to handle removing background image of canvas
-  const removeBackground = () => {
-    setBackgroundImage(null);
-  };
+  // // function to handle removing background image of canvas
+  // const removeBackground = () => {
+  //   setBackgroundImage(null);
+  // };
 
   // when sidebar state changes this function is being called
   const resizeCanvasOnSidebarChange = () => {
@@ -164,8 +165,8 @@ const Canvas = () => {
         dragUrl={dragUrl}
         onChangeDragUrl={onChangeDragUrl}
         handleAddOnClick={handleAddOnClick}
-        addToBackground={addToBackground}
-        removeBackground={removeBackground}
+        // addToBackground={addToBackground}
+        // removeBackground={removeBackground}
         resizeCanvasOnSidebarChange={resizeCanvasOnSidebarChange}
         stageRef={stageRef}
       />
@@ -177,12 +178,16 @@ const Canvas = () => {
           onDrop={handleOnDrop}
           onDragOver={(e) => e.preventDefault()}
         >
+          <Button style={{ justifyItems: "center" }}>View Product List</Button>
+
           <Stage
             width={stageDimensions.width}
             height={stageDimensions.height}
             scaleX={stageDimensions.scale}
             scaleY={stageDimensions.scale}
-            className="canvasStage"
+            className={
+              selectedId ? "canvasStageSelected" : "canvasStageNotSelected"
+            }
             ref={stageRef}
             onMouseDown={(e) => {
               // deselect when clicked on empty area or background image
@@ -190,14 +195,14 @@ const Canvas = () => {
             }}
           >
             <Layer>
-              {typeof backgroundImage === "string" && (
+              {/* {typeof backgroundImage === "string" && (
                 // check if background image is not empty, default state is null
                 <CanvasBackground
                   backgroundUrl={backgroundImage}
                   width={stageWidth}
                   height={stageHeight}
                 />
-              )}
+              )} */}
               {images.map((image, i) => {
                 return (
                   <ImageComponent
@@ -224,4 +229,4 @@ const Canvas = () => {
   );
 };
 
-export default Canvas;
+export default MoodBoard;
