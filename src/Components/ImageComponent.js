@@ -15,6 +15,7 @@ const ImageComponent = ({
   handleDragEnd,
   onChange,
   handleOnDelete,
+  handleImageBounds,
 }) => {
   // creating image based on its src
   const [img] = useImage(image?.src);
@@ -26,6 +27,8 @@ const ImageComponent = ({
     if (isSelected) {
       transformRef.current.nodes([shapeRef.current]);
       transformRef.current.getLayer().batchDraw();
+      shapeRef.current.scaleX(1);
+      shapeRef.current.scaleY(1);
     }
   }, [isSelected]);
 
@@ -68,6 +71,7 @@ const ImageComponent = ({
         shadowOffsetY={4}
         shadowOpacity={0.6}
         onTransformEnd={handleTransformOnEnd}
+        dragBoundFunc={(pos) => handleImageBounds(pos, shapeRef.current)}
       />
       {isSelected && (
         // when selected it creates box around the image to perform resizes

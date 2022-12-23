@@ -9,6 +9,10 @@ import CanvasBackground from "./CanvasBackground";
 import { Button } from "@mui/material";
 
 const MoodBoard = () => {
+  // the pixel amount that the x and y position of the image can go beyond
+  //  the canvas border
+  const lowerBorderLimit = -100;
+  const upperBorderLimit = 100;
   // static canvas dimensions used for scaling ratio
   const stageWidth = 2500,
     stageHeight = 2500;
@@ -80,6 +84,7 @@ const MoodBoard = () => {
   const handleOnDrop = (e, id) => {
     e.preventDefault();
     stageRef.current.setPointersPositions(e);
+
     setImages(
       images.concat([
         {
@@ -89,6 +94,9 @@ const MoodBoard = () => {
         },
       ])
     );
+
+    // console.log("ondrop");
+    // console.log(e);
   };
 
   // Removes image
@@ -142,6 +150,8 @@ const MoodBoard = () => {
       newImages.push(img);
       return newImages;
     });
+    // console.log("onSelected");
+    // console.log(e);
   };
 
   const handleDragStart = (e, id) => {
@@ -155,9 +165,42 @@ const MoodBoard = () => {
       newImages.push(img);
       return newImages;
     });
+    // console.log("drag start");
+    // console.log(e);
   };
 
   const handleDragEnd = (e) => {};
+
+  // Keep image within bounds based on the limit value
+  const handleImageBounds = (pos, shapeCurrent) => {
+    // console.log("pos: " + pos.x + " , " + pos.y);
+    // console.log(shapeCurrent.getClientRect());
+    const { height, width } = shapeCurrent.getClientRect();
+    // console.log("shape stuff: " + height + ", " + width);
+    // console.log(stageRef.current);
+    const widthOfCanvas = stageRef.current.bufferCanvas.width;
+    const heightOfCanvas = stageRef.current.bufferCanvas.height;
+    // console.log("canvas stuff:" + widthOfCanvas + " , " + heightOfCanvas);
+    // console.log("scale: " + shapeCurrent.scaleX() + ", " + shapeCurrent.scaleY());
+    let x = pos.x;
+    let y = pos.y;
+    if (pos.x < lowerBorderLimit) {
+      x = lowerBorderLimit;
+    } else if (pos.x > widthOfCanvas - width + upperBorderLimit) {
+      x = widthOfCanvas - width + upperBorderLimit;
+    }
+
+    if (pos.y < lowerBorderLimit) {
+      y = lowerBorderLimit;
+    } else if (pos.y > heightOfCanvas - height + upperBorderLimit) {
+      y = heightOfCanvas - height + upperBorderLimit;
+    }
+
+    return {
+      x,
+      y,
+    };
+  };
 
   return (
     <div className="workContainer">
@@ -214,6 +257,7 @@ const MoodBoard = () => {
                     onSelect={(e) => onSelected(e, image?.id)}
                     handleDragStart={(e) => handleDragStart(e, image?.id)}
                     handleDragEnd={handleDragEnd}
+                    handleImageBounds={handleImageBounds}
                     onChange={(newAttrs) => {
                       handleTransformChange(newAttrs, i);
                     }}
