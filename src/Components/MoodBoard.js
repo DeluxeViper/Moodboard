@@ -6,7 +6,9 @@ import "./Styles/canvas.css";
 import ItemsList from "./ItemsList";
 import ImageComponent from "./ImageComponent";
 import CanvasBackground from "./CanvasBackground";
-import { Button } from "@mui/material";
+import { Button, Fab } from "@mui/material";
+import Add from "@mui/icons-material/Add";
+import MenuModal from "./Modal/MenuModal";
 
 const MoodBoard = () => {
   // the pixel amount that the x and y position of the image can go beyond
@@ -36,6 +38,7 @@ const MoodBoard = () => {
   // const [backgroundImage, setBackgroundImage] = useState();
   // selectedId is used for keeping selected image to handle resizes, z-index priority etc.
   const [selectedId, setSelectedId] = useState(null);
+  const [modalOpen, setModalOpen] = useState(false);
 
   // function to handle resize of canvas dimensions based on window width or when sidebar is closed or opened
   const handleResize = () => {
@@ -121,16 +124,6 @@ const MoodBoard = () => {
     );
   };
 
-  // function to handle adding background image of canvas
-  // const addToBackground = (backgroundUrl) => {
-  //   setBackgroundImage(backgroundUrl);
-  // };
-
-  // // function to handle removing background image of canvas
-  // const removeBackground = () => {
-  //   setBackgroundImage(null);
-  // };
-
   // when sidebar state changes this function is being called
   const resizeCanvasOnSidebarChange = () => {
     // wait for sidebar animation to complete
@@ -202,43 +195,52 @@ const MoodBoard = () => {
     };
   };
 
+  const handleModalOpen = () => {
+    setModalOpen(!modalOpen);
+  };
+
+  const handleModalClose = () => {
+    setModalOpen(false);
+  };
+
   return (
-    <div className="workContainer">
-      <ItemsList
-        dragUrl={dragUrl}
-        onChangeDragUrl={onChangeDragUrl}
-        handleAddOnClick={handleAddOnClick}
-        // addToBackground={addToBackground}
-        // removeBackground={removeBackground}
-        resizeCanvasOnSidebarChange={resizeCanvasOnSidebarChange}
-        stageRef={stageRef}
-      />
+    <div>
+      <MenuModal open={modalOpen} handleClose={handleModalClose} />
 
-      <div className="canvasWrap">
-        <div
-          className="canvasBody"
-          ref={containerRef}
-          onDrop={handleOnDrop}
-          onDragOver={(e) => e.preventDefault()}
-        >
-          <Button style={{ justifyItems: "center" }}>View Product List</Button>
+      <div className="workContainer">
+        {/* <ItemsList
+          dragUrl={dragUrl}
+          onChangeDragUrl={onChangeDragUrl}
+          handleAddOnClick={handleAddOnClick}
+          // addToBackground={addToBackground}
+          // removeBackground={removeBackground}
+          resizeCanvasOnSidebarChange={resizeCanvasOnSidebarChange}
+          stageRef={stageRef}
+        /> */}
 
-          <Stage
-            width={stageDimensions.width}
-            height={stageDimensions.height}
-            scaleX={stageDimensions.scale}
-            scaleY={stageDimensions.scale}
-            className={
-              selectedId ? "canvasStageSelected" : "canvasStageNotSelected"
-            }
-            ref={stageRef}
-            onMouseDown={(e) => {
-              // deselect when clicked on empty area or background image
-              checkDeselect(e);
-            }}
+        <div className="canvasWrap">
+          <div
+            className="canvasBody"
+            ref={containerRef}
+            onDrop={handleOnDrop}
+            onDragOver={(e) => e.preventDefault()}
           >
-            <Layer>
-              {/* {typeof backgroundImage === "string" && (
+            <Stage
+              width={stageDimensions.width}
+              height={stageDimensions.height}
+              scaleX={stageDimensions.scale}
+              scaleY={stageDimensions.scale}
+              className={
+                selectedId ? "canvasStageSelected" : "canvasStageNotSelected"
+              }
+              ref={stageRef}
+              onMouseDown={(e) => {
+                // deselect when clicked on empty area or background image
+                checkDeselect(e);
+              }}
+            >
+              <Layer>
+                {/* {typeof backgroundImage === "string" && (
                 // check if background image is not empty, default state is null
                 <CanvasBackground
                   backgroundUrl={backgroundImage}
@@ -246,27 +248,38 @@ const MoodBoard = () => {
                   height={stageHeight}
                 />
               )} */}
-              {images.map((image, i) => {
-                return (
-                  <ImageComponent
-                    image={image}
-                    shapeProps={image}
-                    id={image?.id}
-                    key={image?.id}
-                    isSelected={image?.id === selectedId}
-                    onSelect={(e) => onSelected(e, image?.id)}
-                    handleDragStart={(e) => handleDragStart(e, image?.id)}
-                    handleDragEnd={handleDragEnd}
-                    handleImageBounds={handleImageBounds}
-                    onChange={(newAttrs) => {
-                      handleTransformChange(newAttrs, i);
-                    }}
-                    handleOnDelete={handleOnDelete}
-                  />
-                );
-              })}
-            </Layer>
-          </Stage>
+                {images.map((image, i) => {
+                  return (
+                    <ImageComponent
+                      image={image}
+                      shapeProps={image}
+                      id={image?.id}
+                      key={image?.id}
+                      isSelected={image?.id === selectedId}
+                      onSelect={(e) => onSelected(e, image?.id)}
+                      handleDragStart={(e) => handleDragStart(e, image?.id)}
+                      handleDragEnd={handleDragEnd}
+                      handleImageBounds={handleImageBounds}
+                      onChange={(newAttrs) => {
+                        handleTransformChange(newAttrs, i);
+                      }}
+                      handleOnDelete={handleOnDelete}
+                    />
+                  );
+                })}
+              </Layer>
+            </Stage>
+          </div>
+        </div>
+        <div className="fab">
+          <Fab
+            color="primary"
+            aria-label="add"
+            size=""
+            onClick={handleModalOpen}
+          >
+            <Add />
+          </Fab>
         </div>
       </div>
     </div>

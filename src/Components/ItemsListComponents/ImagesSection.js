@@ -38,6 +38,8 @@ const ImagesSection = (props) => {
                 product.name !== "Reverse Withdrawal Payment" &&
                 product.images
               ) {
+                console.log("product:");
+                console.log(product);
                 product.images.forEach((image) => {
                   setItems((oldItems) => [...oldItems, image]);
                 });
