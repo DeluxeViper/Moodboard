@@ -24,7 +24,9 @@
 .canvasStageSelected {
   background-color: white !important;
   /* box-shadow: 0 2px 8px rgb(14 19 24 / 7%); */
-  border-style: dotted;
+  border-style: dashed;
+  border-width: 2px;
+  outline-width: 2.77777;
 }
 
 .fab {
@@ -37,6 +39,10 @@
   align-items: center;
   justify-content: center;
   transform: scale(1.25)
+}
+
+.imageComponent {
+  cursor: grab
 }
 
 /* responsive */

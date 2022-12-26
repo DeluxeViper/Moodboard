@@ -1,9 +1,10 @@
 /** @format */
 
 import React, { useState, useEffect, createContext } from "react";
-import MoodBoard from "./Components/MoodBoard";
+import MoodBoard from "./Components/MoodBoard/MoodBoard";
 import { Typography } from "@mui/material";
 import WooCommerceRestApi from "@woocommerce/woocommerce-rest-api";
+
 export const ProductItemsContext = createContext();
 
 const api = new WooCommerceRestApi({
@@ -16,6 +17,7 @@ const api = new WooCommerceRestApi({
 function App() {
   const [items, setItems] = useState([]);
   const [itemsLoaded, setItemsLoaded] = useState(false);
+  const [mbItems, setMbItems] = useState([]);
 
   useEffect(() => {
     getProductsFromWooCommerce();
@@ -40,13 +42,14 @@ function App() {
                 product.name !== "Reverse Withdrawal Payment" &&
                 product.images
               ) {
-                product.images.forEach((image) => {
+                product.images.forEach((image, index) => {
                   const imageToAdd = {
                     ...image,
                     brandName: product.name,
                     price: product.price,
                     productUrl: product.permalink,
                     stockStatus: product.stockStatus,
+                    id: `${product.id}-${index}`,
                   };
                   setItems((oldItems) => [...oldItems, imageToAdd]);
                 });
@@ -63,7 +66,9 @@ function App() {
 
   return (
     <div className="bodyWrap">
-      <ProductItemsContext.Provider value={{ items, setItems, itemsLoaded }}>
+      <ProductItemsContext.Provider
+        value={{ items, setItems, itemsLoaded, mbItems, setMbItems }}
+      >
         <Typography
           component="h2"
           variant="h5"
@@ -72,10 +77,9 @@ function App() {
           noWrap
           sx={{ flex: 1 }}
         >
-          My Mood Board
+          The Mood Board
         </Typography>
         <MoodBoard />
-        {/* <ProductsCarousel /> */}
       </ProductItemsContext.Provider>
     </div>
   );

@@ -3,6 +3,8 @@
 import React, { useRef, useEffect, Fragment } from "react";
 import { Image, Path, Transformer } from "react-konva";
 import useImage from "use-image";
+import "../Styles/canvas.css";
+import { Fab } from "@mui/material";
 
 // The image that can be dragged and dropped on canvas
 const ImageComponent = ({
@@ -27,6 +29,7 @@ const ImageComponent = ({
     if (isSelected) {
       transformRef.current.nodes([shapeRef.current]);
       transformRef.current.getLayer().batchDraw();
+      transformRef.current.zIndex(10000);
       shapeRef.current.scaleX(1);
       shapeRef.current.scaleY(1);
     }
@@ -52,6 +55,16 @@ const ImageComponent = ({
     });
   };
 
+  const onMouseOver = (e) => {
+    const container = e.target.getStage().container();
+    container.style.cursor = "grab";
+  };
+
+  const onMouseLeave = (e) => {
+    const container = e.target.getStage().container();
+    container.style.cursor = "default";
+  };
+
   const handleOnDrop = (e) => {};
   return (
     <Fragment>
@@ -71,6 +84,8 @@ const ImageComponent = ({
         shadowOffsetY={4}
         shadowOpacity={0.6}
         onTransformEnd={handleTransformOnEnd}
+        onMouseOver={onMouseOver}
+        onMouseLeave={onMouseLeave}
         dragBoundFunc={(pos) => handleImageBounds(pos, shapeRef.current)}
       />
       {isSelected && (
@@ -88,8 +103,8 @@ const ImageComponent = ({
         >
           <Path
             fill="black"
-            x={-30}
-            y={-30}
+            x={30}
+            y={30}
             data="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"
             onClick={() => handleOnDelete(img.src)}
           />

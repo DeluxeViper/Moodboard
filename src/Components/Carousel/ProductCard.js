@@ -7,10 +7,29 @@ import {
   Typography,
   Button,
 } from "@mui/material";
-import React from "react";
+import React, { useContext } from "react";
+import { ProductItemsContext } from "../../App";
+import { MoodBoardInfoContext } from "../MoodBoard/MoodBoard";
 
-const ProductCard = ({ item, handleAddProductToMoodBoard }) => {
-  const { alt, name, src, productUrl, price, stockStatus } = item;
+const ProductCard = ({ item }) => {
+  const { alt, name, src, productUrl, price, stockStatus, id } = item;
+  const { mbItems, setMbItems } = useContext(ProductItemsContext);
+  const { stageDimensions } = useContext(MoodBoardInfoContext);
+
+  const handleAddProductToMoodBoard = () => {
+    let centerX = stageDimensions.width / 2;
+    let centerY = stageDimensions.height / 2;
+    setMbItems(
+      mbItems.concat([
+        {
+          x: centerX,
+          y: centerY,
+          src: src,
+          id: id,
+        },
+      ])
+    );
+  };
 
   return (
     <Card
