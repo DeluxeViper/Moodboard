@@ -10,10 +10,12 @@ import {
 import React, { useContext } from "react";
 import { ProductItemsContext } from "../../App";
 import { MoodBoardInfoContext } from "../MoodBoard/MoodBoard";
+import AddToPhotosIcon from "@mui/icons-material/AddToPhotos";
 
 const ProductCard = ({ item }) => {
   const { alt, name, src, productUrl, price, stockStatus, id } = item;
-  const { mbItems, setMbItems } = useContext(ProductItemsContext);
+  const { mbItems, setMbItems, snackPack, setSnackPack } =
+    useContext(ProductItemsContext);
   const { stageDimensions } = useContext(MoodBoardInfoContext);
 
   const handleAddProductToMoodBoard = () => {
@@ -29,6 +31,12 @@ const ProductCard = ({ item }) => {
         },
       ])
     );
+
+    // Show snackbar
+    setSnackPack((prev) => [
+      ...prev,
+      { message: `Added ${alt} to Moodboard.`, key: new Date().getTime() },
+    ]);
   };
 
   return (
@@ -53,7 +61,12 @@ const ProductCard = ({ item }) => {
         <Typography variantBottom="p" component="div">
           {price}
         </Typography>
-        <Button onClick={handleAddProductToMoodBoard}>Add to Moodboard</Button>
+        <Button
+          onClick={handleAddProductToMoodBoard}
+          startIcon={<AddToPhotosIcon />}
+        >
+          Add to Moodboard
+        </Button>
       </CardContent>
     </Card>
   );
