@@ -4,7 +4,6 @@ import React, { useState, useEffect, createContext } from "react";
 import MoodBoard from "./Components/MoodBoard/MoodBoard";
 import { Typography, Snackbar, IconButton, Alert } from "@mui/material";
 import WooCommerceRestApi from "@woocommerce/woocommerce-rest-api";
-import CloseIcon from "@mui/icons-material/Close";
 
 export const ProductItemsContext = createContext();
 
