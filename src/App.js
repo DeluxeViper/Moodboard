@@ -2,8 +2,11 @@
 
 import React, { useState, useEffect, createContext } from "react";
 import MoodBoard from "./Components/MoodBoard/MoodBoard";
-import { Typography, Snackbar, IconButton, Alert } from "@mui/material";
+import { Typography, Snackbar, Alert, Fab } from "@mui/material";
 import WooCommerceRestApi from "@woocommerce/woocommerce-rest-api";
+import { Settings } from "@mui/icons-material";
+import "./Components/Styles/app.css";
+import SettingsModal from "./Components/Modal/SettingsModal";
 
 export const ProductItemsContext = createContext();
 
@@ -21,6 +24,7 @@ function App() {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackPack, setSnackPack] = React.useState([]);
   const [messageInfo, setMessageInfo] = React.useState(undefined);
+  const [settingsModalOpen, setSettingsModalOpen] = useState(false);
 
   useEffect(() => {
     getProductsFromWooCommerce();
@@ -90,6 +94,10 @@ function App() {
     setMessageInfo(undefined);
   };
 
+  const handleOpenSettingsModal = () => {
+    setSettingsModalOpen(true);
+  };
+
   return (
     <div className="bodyWrap">
       <ProductItemsContext.Provider
@@ -113,6 +121,11 @@ function App() {
         >
           The Mood Board
         </Typography>
+        <div className="settings-button">
+          <Fab color="white" aria-label="add" onClick={handleOpenSettingsModal}>
+            <Settings />
+          </Fab>
+        </div>
         <MoodBoard />
         <Snackbar
           key={messageInfo ? messageInfo.key : undefined}
@@ -125,6 +138,10 @@ function App() {
             {messageInfo ? messageInfo.message : undefined}
           </Alert>
         </Snackbar>
+        <SettingsModal
+          open={settingsModalOpen}
+          handleClose={() => setSettingsModalOpen(false)}
+        />
       </ProductItemsContext.Provider>
     </div>
   );

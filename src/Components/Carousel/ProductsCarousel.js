@@ -70,10 +70,9 @@ const ProductsCarousel = () => {
           </div>
           {filteredItems && filteredItems.length > 0 ? (
             <Flickity
-              className={"flickity"}
-              elementType={"div"}
+              className="flickity"
+              elementType="div"
               disableImagesLoaded={false}
-              resize
               key={itemsLoaded}
               options={flickityOptions}
               static

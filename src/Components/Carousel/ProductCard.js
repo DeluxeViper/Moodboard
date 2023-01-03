@@ -17,6 +17,7 @@ const ProductCard = ({ item }) => {
   const { mbItems, setMbItems, snackPack, setSnackPack } =
     useContext(ProductItemsContext);
   const { stageDimensions } = useContext(MoodBoardInfoContext);
+  // const matches = useMediaQuery();
 
   const handleAddProductToMoodBoard = () => {
     let centerX = stageDimensions.width / 2;
