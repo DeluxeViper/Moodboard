@@ -5,10 +5,13 @@ import MoodBoard from "./Components/MoodBoard/MoodBoard";
 import { Typography, Snackbar, Alert, Fab } from "@mui/material";
 import WooCommerceRestApi from "@woocommerce/woocommerce-rest-api";
 import { Settings } from "@mui/icons-material";
-import "./Components/Styles/app.css";
 import SettingsModal from "./Components/Modal/SettingsModal";
+import { Themes } from "./Theme/Constants";
+import "./Components/Styles/app.css";
+import "./Components/Styles/theme.css";
 
 export const ProductItemsContext = createContext();
+export const ThemeContext = createContext();
 
 const api = new WooCommerceRestApi({
   url: process.env.REACT_APP_NEXT_PUBLIC_WORDPRESS_SITE,
@@ -25,6 +28,7 @@ function App() {
   const [snackPack, setSnackPack] = React.useState([]);
   const [messageInfo, setMessageInfo] = React.useState(undefined);
   const [settingsModalOpen, setSettingsModalOpen] = useState(false);
+  const [theme, setTheme] = useState(Themes.WHITE);
 
   useEffect(() => {
     getProductsFromWooCommerce();
@@ -98,52 +102,68 @@ function App() {
     setSettingsModalOpen(true);
   };
 
+  const handleThemeBackgroundColor = () => {
+    return theme === Themes.WHITE
+      ? "whiteBackground"
+      : theme === Themes.BEIGE
+      ? "beigeBackground"
+      : theme === Themes.BLACK
+      ? "blackBackground"
+      : Themes.WHITE;
+  };
+
   return (
-    <div className="bodyWrap">
-      <ProductItemsContext.Provider
-        value={{
-          items,
-          setItems,
-          itemsLoaded,
-          mbItems,
-          setMbItems,
-          snackPack,
-          setSnackPack,
-        }}
-      >
-        <Typography
-          component="h2"
-          variant="h5"
-          color="inherit"
-          align="center"
-          noWrap
-          sx={{ flex: 1 }}
+    <ThemeContext.Provider value={{ theme, setTheme }}>
+      <div className={handleThemeBackgroundColor()}>
+        <ProductItemsContext.Provider
+          value={{
+            items,
+            setItems,
+            itemsLoaded,
+            mbItems,
+            setMbItems,
+            snackPack,
+            setSnackPack,
+          }}
         >
-          The Mood Board
-        </Typography>
-        <div className="settings-button">
-          <Fab color="white" aria-label="add" onClick={handleOpenSettingsModal}>
-            <Settings />
-          </Fab>
-        </div>
-        <MoodBoard />
-        <Snackbar
-          key={messageInfo ? messageInfo.key : undefined}
-          open={snackbarOpen}
-          autoHideDuration={4000}
-          onClose={handleClose}
-          TransitionProps={{ onExited: handleExited }}
-        >
-          <Alert severity="success">
-            {messageInfo ? messageInfo.message : undefined}
-          </Alert>
-        </Snackbar>
-        <SettingsModal
-          open={settingsModalOpen}
-          handleClose={() => setSettingsModalOpen(false)}
-        />
-      </ProductItemsContext.Provider>
-    </div>
+          <Typography
+            component="h2"
+            variant="h5"
+            color="inherit"
+            align="center"
+            noWrap
+            sx={{ flex: 1 }}
+          >
+            The Mood Board
+          </Typography>
+          <div className="settings-button">
+            <Fab
+              color="white"
+              aria-label="add"
+              onClick={handleOpenSettingsModal}
+            >
+              <Settings />
+            </Fab>
+          </div>
+          <MoodBoard />
+          <Snackbar
+            key={messageInfo ? messageInfo.key : undefined}
+            open={snackbarOpen}
+            autoHideDuration={4000}
+            onClose={handleClose}
+            TransitionProps={{ onExited: handleExited }}
+          >
+            <Alert severity="success">
+              {messageInfo ? messageInfo.message : undefined}
+            </Alert>
+          </Snackbar>
+          <SettingsModal
+            open={settingsModalOpen}
+            handleClose={() => setSettingsModalOpen(false)}
+          />
+        </ProductItemsContext.Provider>
+      </div>
+    </ThemeContext.Provider>
   );
 }
 

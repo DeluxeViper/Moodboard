@@ -8,14 +8,15 @@ import React, {
   createContext,
 } from "react";
 import { Stage, Layer } from "react-konva";
-import "../Styles/canvas.css";
 import ItemsList from "../ItemsList";
 import ImageComponent from "./ImageComponent";
-import CanvasBackground from "../CanvasBackground";
 import { Button, Fab } from "@mui/material";
 import Add from "@mui/icons-material/Add";
 import MenuModal from "../Modal/MenuModal";
-import { ProductItemsContext } from "../../App";
+import { ProductItemsContext, ThemeContext } from "../../App";
+import { Themes } from "../../Theme/Constants";
+import "../Styles/canvas.css";
+import "../Styles/theme.css";
 
 export const MoodBoardInfoContext = createContext();
 
@@ -48,6 +49,7 @@ const MoodBoard = () => {
   // selectedId is used for keeping selected image to handle resizes, z-index priority etc.
   const [selectedId, setSelectedId] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
+  const { theme } = useContext(ThemeContext);
 
   // function to handle resize of canvas dimensions based on window width or when sidebar is closed or opened
   const handleResize = () => {
@@ -212,6 +214,25 @@ const MoodBoard = () => {
     setModalOpen(false);
   };
 
+  const handleStageClassname = () => {
+    let className = "";
+    if (selectedId) {
+      className += "canvasStageSelected";
+    } else {
+      className += "";
+    }
+
+    if (theme === Themes.WHITE) {
+      className += " whiteBackground";
+    } else if (theme === Themes.BEIGE) {
+      className += " beigeBackground";
+    } else if (theme === Themes.BLACK) {
+      className += " blackBackground";
+    }
+
+    return className;
+  };
+
   return (
     <div>
       <MoodBoardInfoContext.Provider
@@ -242,9 +263,7 @@ const MoodBoard = () => {
                 height={stageDimensions.height}
                 scaleX={stageDimensions.scale}
                 scaleY={stageDimensions.scale}
-                className={
-                  selectedId ? "canvasStageSelected" : "canvasStageNotSelected"
-                }
+                className={handleStageClassname()}
                 ref={stageRef}
                 onMouseDown={(e) => {
                   // deselect when clicked on empty area or background image

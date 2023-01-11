@@ -1,0 +1,15 @@
+/** @format */
+
+.beigeBackground {
+  background-color: rgb(227, 217, 198) !important;
+}
+
+.whiteBackground {
+  background-color: #fff !important;
+}
+
+.blackBackground {
+  background-color: #1f1f1f !important;
+  border-color: #fff;
+  color: #fff;
+}
