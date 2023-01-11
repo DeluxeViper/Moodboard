@@ -23,13 +23,25 @@ const SettingsModal = ({ open, handleClose }) => {
     <Modal open={open} onClose={handleClose}>
       <div className="settingsModal">
         <Typography
-          variant="h2"
+          variant="h3"
           component="div"
-          style={{ textAlign: "center", marginTop: "10px" }}
+          style={{
+            textAlign: "center",
+            marginTop: "10px",
+            marginBottom: "20px",
+          }}
         >
           Edit Your Mood Board
         </Typography>
-        <Typography variant="p" component="div" style={{ textAlign: "center" }}>
+        <Typography
+          variant="p"
+          component="div"
+          style={{
+            textAlign: "center",
+            marginBottom: "10px",
+            fontSize: "10px",
+          }}
+        >
           BACKGROUND COLOR
         </Typography>
         <RadioGroup
@@ -38,21 +50,25 @@ const SettingsModal = ({ open, handleClose }) => {
           name="row-radio-buttons-group"
           onChange={handleThemeSelection}
           value={theme}
+          style={{ textAlign: "center", justifyContent: "center" }}
         >
           <FormControlLabel
             value={Themes.WHITE}
             control={<Radio />}
-            label="white"
+            label={<span className="whiteRadioLabel"></span>}
+            labelPlacement="top"
           />
           <FormControlLabel
             value={Themes.BEIGE}
             control={<Radio />}
-            label="beige"
+            label={<span className="beigeRadioLabel"></span>}
+            labelPlacement="top"
           />
           <FormControlLabel
             value={Themes.BLACK}
             control={<Radio />}
-            label="black"
+            label={<span className="blackRadioLabel"></span>}
+            labelPlacement="top"
           />
         </RadioGroup>
       </div>

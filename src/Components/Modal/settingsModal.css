@@ -14,3 +14,29 @@
   width: 50%;
   border-radius: 5px;
 }
+
+.beigeRadioLabel {
+  background-color: rgb(227, 217, 198);
+  height: 6.5rem;
+  width: 6.5rem;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.blackRadioLabel {
+  background-color: rgb(31, 31, 31);
+  height: 6.5rem;
+  width: 6.5rem;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.whiteRadioLabel {
+  background-color: #fff;
+  height: 6.5rem;
+  width: 6.5rem;
+  border-radius: 50%;
+  display: inline-block;
+  border-color: #1f1f1f;
+  border-style: solid;
+}
