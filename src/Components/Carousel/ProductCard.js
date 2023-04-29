@@ -28,6 +28,7 @@ const ProductCard = ({ item }) => {
           x: centerX,
           y: centerY,
           src: src,
+          crossOrigin: "anonymous",
           id: id,
         },
       ])
@@ -45,14 +46,17 @@ const ProductCard = ({ item }) => {
       sx={{
         maxWidth: 400,
         padding: "0.1em",
+        marginTop: "5px",
+        marginBottom: "5px",
         marginRight: "10px",
+        height: 380,
       }}
     >
       <CardMedia
         component="img"
         image={src}
         alt={alt}
-        height="350"
+        height={250}
         sx={{ padding: "2px", objectFit: "contain" }}
       />
       <CardContent>

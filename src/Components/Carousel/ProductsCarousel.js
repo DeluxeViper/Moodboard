@@ -14,7 +14,8 @@ import {
 import { Search } from "@mui/icons-material";
 
 const ProductsCarousel = () => {
-  const { items, itemsLoaded } = useContext(ProductItemsContext);
+  const { items, itemsLoaded, errorLoadingItems } =
+    useContext(ProductItemsContext);
   const [filteredItems, setFilteredItems] = useState([]);
   const flickityOptions = {
     accessibility: false,
@@ -46,8 +47,12 @@ const ProductsCarousel = () => {
 
   return (
     <div>
-      {!itemsLoaded ? (
+      {!itemsLoaded && !errorLoadingItems ? (
         <CircularProgress className="progress" />
+      ) : errorLoadingItems ? (
+        <Typography variant="h4" component="div" style={{ marginLeft: "20px" }}>
+          Error retrieving items.
+        </Typography>
       ) : (
         <div>
           <div className="product-search-text-field">
@@ -68,7 +73,7 @@ const ProductsCarousel = () => {
               fullWidth
             ></TextField>
           </div>
-          {filteredItems && filteredItems.length > 0 ? (
+          {filteredItems && filteredItems.length > 0 && !errorLoadingItems ? (
             <Flickity
               className="flickity"
               elementType="div"
@@ -77,6 +82,9 @@ const ProductsCarousel = () => {
               options={flickityOptions}
               static
               reloadOnUpdate
+              contain
+              adaptiveHeight
+              setGalarySize={false}
             >
               {filteredItems.map((item, i) => {
                 return <ProductCard key={i} item={item} />;
