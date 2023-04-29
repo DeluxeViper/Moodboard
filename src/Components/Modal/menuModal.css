@@ -1,3 +1,5 @@
+/** @format */
+
 .menuModal {
   top: 0;
   position: fixed;
@@ -8,7 +10,7 @@
   box-shadow: 0 12px 35px 0 rgb(16 39 112 / 25%);
   background-color: azure;
   display: block;
-  height: 55%;
+  height: 60%;
   width: 50%;
   border-radius: 5px;
 }
@@ -25,4 +27,37 @@
   height: 100%;
   align-items: center;
   margin: auto auto;
+}
+
+@media only screen and (min-height: 950px) and (max-height: 1000px) {
+  .menuModal {
+    height: 65%;
+  }
+}
+@media only screen and (min-height: 900px) and (max-height: 950px) {
+  .menuModal {
+    height: 67%;
+  }
+}
+@media only screen and (max-height: 900px) {
+  .menuModal {
+    height: 70%;
+  }
+}
+
+@media only screen and (max-height: 800px) {
+  .menuModal {
+    height: 78%;
+  }
+}
+@media only screen and (min-height: 800px) and (max-height: 900px) {
+  .menuModal {
+    height: 75%;
+  }
+}
+
+@media only screen and (min-height: 1250px) {
+  .menuModal {
+    height: 50%;
+  }
 }
