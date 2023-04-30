@@ -10,7 +10,7 @@
   box-shadow: 0 12px 35px 0 rgb(16 39 112 / 25%);
   background-color: white;
   display: block;
-  height: 55%;
+  height: 30%;
   width: 50%;
   border-radius: 5px;
   text-align: center;
@@ -41,4 +41,22 @@
   border-color: #1f1f1f;
   border-style: solid;
   border-width: 1px;
+}
+
+@media screen and (max-height: 1150px) {
+  .settingsModal {
+    height: 40%;
+  }
+}
+
+@media screen and (max-height: 800px) {
+  .settingsModal {
+    height: 50%;
+  }
+}
+
+@media screen and (max-height: 700px) {
+  .settingsModal {
+    height: 60%;
+  }
 }

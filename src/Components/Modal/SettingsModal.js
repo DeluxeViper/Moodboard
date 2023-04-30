@@ -38,7 +38,7 @@ const SettingsModal = ({ open, handleClose, handleCanvasExport }) => {
           variant="h3"
           component="div"
           style={{
-            marginTop: "10px",
+            marginTop: "20px",
             marginBottom: "20px",
           }}
         >

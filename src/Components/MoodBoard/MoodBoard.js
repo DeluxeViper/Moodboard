@@ -8,9 +8,8 @@ import React, {
   createContext,
 } from "react";
 import { Stage, Layer } from "react-konva";
-import ItemsList from "../ItemsList";
 import ImageComponent from "./ImageComponent";
-import { Button, Fab, Typography, Slider } from "@mui/material";
+import { Fab, Typography, Slider, Card } from "@mui/material";
 import Add from "@mui/icons-material/Add";
 import MenuModal from "../Modal/MenuModal";
 import { ProductItemsContext, ThemeContext } from "../../App";
@@ -338,22 +337,75 @@ const MoodBoard = () => {
               onDrop={handleOnDrop}
               onDragOver={(e) => e.preventDefault()}
             >
-              <Stage
-                width={stageDimensions.width}
-                height={stageDimensions.height}
-                scaleX={stageDimensions.scale}
-                scaleY={stageDimensions.scale}
-                x={stageDimensions.stageX}
-                y={stageDimensions.stageY}
-                className={handleStageClassname()}
-                ref={stageRef}
-                onMouseDown={(e) => {
-                  // deselect when clicked on empty area or background image
-                  checkDeselect(e);
-                }}
-              >
-                <Layer>
-                  {/* {typeof backgroundImage === "string" && (
+              {mbItems && mbItems.length === 0 ? (
+                <Card
+                  style={{
+                    backgroundColor: "#f8f6f1",
+                    marginLeft: "auto",
+                    marginRight: "auto",
+                    height: "500px",
+                    width: "300px",
+                    padding: "10px",
+                    marginBottom: "20px",
+                  }}
+                >
+                  <Typography
+                    component="h3"
+                    color="inherit"
+                    align="center"
+                    sx={{
+                      fontSize: "50px",
+                      fontFamily: "SangbleuSans,Helvetica,Arial,sans-serif",
+                      letterSpacing: "-2px",
+                      transition: "700ms ease",
+                      fontVariationSettings: "wght 311",
+                      marginBottom: "2rem",
+                      outline: "none",
+                      textAlign: "center",
+                    }}
+                  >
+                    Add products by clicking on the add item button below.
+                  </Typography>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                    }}
+                  >
+                    <svg id="more-arrows">
+                      <polygon
+                        class="arrow-top"
+                        points="37.6,27.9 1.8,1.3 3.3,0 37.6,25.3 71.9,0 73.7,1.3 "
+                      />
+                      <polygon
+                        class="arrow-middle"
+                        points="37.6,45.8 0.8,18.7 4.4,16.4 37.6,41.2 71.2,16.4 74.5,18.7 "
+                      />
+                      <polygon
+                        class="arrow-bottom"
+                        points="37.6,64 0,36.1 5.1,32.8 37.6,56.8 70.4,32.8 75.5,36.1 "
+                      />
+                    </svg>
+                  </div>
+                </Card>
+              ) : (
+                <Stage
+                  width={stageDimensions.width}
+                  height={stageDimensions.height}
+                  scaleX={stageDimensions.scale}
+                  scaleY={stageDimensions.scale}
+                  x={stageDimensions.stageX}
+                  y={stageDimensions.stageY}
+                  className={handleStageClassname()}
+                  ref={stageRef}
+                  onMouseDown={(e) => {
+                    // deselect when clicked on empty area or background image
+                    checkDeselect(e);
+                  }}
+                >
+                  <Layer>
+                    {/* {typeof backgroundImage === "string" && (
                 // check if background image is not empty, default state is null
                 <CanvasBackground
                   backgroundUrl={backgroundImage}
@@ -361,27 +413,28 @@ const MoodBoard = () => {
                   height={stageHeight}
                 />
               )} */}
-                  {mbItems.map((image, i) => {
-                    return (
-                      <ImageComponent
-                        image={image}
-                        shapeProps={image}
-                        id={image?.id}
-                        key={image?.id}
-                        isSelected={image?.id === selectedId}
-                        onSelect={(e) => onSelected(e, image?.id)}
-                        handleDragStart={(e) => handleDragStart(e, image?.id)}
-                        handleDragEnd={handleDragEnd}
-                        handleImageBounds={handleImageLimitBounds}
-                        onChange={(newAttrs) => {
-                          handleTransformChange(newAttrs, i);
-                        }}
-                        handleOnDelete={handleOnDelete}
-                      />
-                    );
-                  })}
-                </Layer>
-              </Stage>
+                    {mbItems.map((image, i) => {
+                      return (
+                        <ImageComponent
+                          image={image}
+                          shapeProps={image}
+                          id={image?.id}
+                          key={image?.id}
+                          isSelected={image?.id === selectedId}
+                          onSelect={(e) => onSelected(e, image?.id)}
+                          handleDragStart={(e) => handleDragStart(e, image?.id)}
+                          handleDragEnd={handleDragEnd}
+                          handleImageBounds={handleImageLimitBounds}
+                          onChange={(newAttrs) => {
+                            handleTransformChange(newAttrs, i);
+                          }}
+                          handleOnDelete={handleOnDelete}
+                        />
+                      );
+                    })}
+                  </Layer>
+                </Stage>
+              )}
             </div>
           </div>
           <div className="fab">
