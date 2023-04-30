@@ -10,7 +10,7 @@ import React, {
 import { Stage, Layer } from "react-konva";
 import ItemsList from "../ItemsList";
 import ImageComponent from "./ImageComponent";
-import { Button, Fab } from "@mui/material";
+import { Button, Fab, Typography, Slider } from "@mui/material";
 import Add from "@mui/icons-material/Add";
 import MenuModal from "../Modal/MenuModal";
 import { ProductItemsContext, ThemeContext } from "../../App";
@@ -26,13 +26,16 @@ const MoodBoard = () => {
   const lowerBorderLimit = -100;
   const upperBorderLimit = 100;
   // static canvas dimensions used for scaling ratio
-  const stageWidth = 2500,
-    stageHeight = 2500;
+  const stageWidth = 2800,
+    stageHeight = 2800;
   // dynamic canvas dimensions
+  const [sliderValue, setSliderValue] = useState(1);
   const [stageDimensions, setStageDimensions] = useState({
     width: stageWidth,
     height: stageHeight,
     scale: 1,
+    stageX: 0,
+    stageY: 0,
   });
   // stageRef is used for handling callbacks - example: getting canvas positions after drag and rop
   const stageRef = useRef();
@@ -43,7 +46,9 @@ const MoodBoard = () => {
   const [dragUrl, setDragUrl] = useState();
   const [dragId, setDragId] = useState();
   // images stores images that are added to canvas
-  const { mbItems, setMbItems } = useContext(ProductItemsContext);
+  const { mbItems, setMbItems, triggerExport, setTriggerExport } =
+    useContext(ProductItemsContext);
+  // const [oldScale, setOldScale] = useState(sliderValue);
   // backgroundImage is used for setting backgroundImage of canvas
   // const [backgroundImage, setBackgroundImage] = useState();
   // selectedId is used for keeping selected image to handle resizes, z-index priority etc.
@@ -51,10 +56,23 @@ const MoodBoard = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const { theme } = useContext(ThemeContext);
 
+  useEffect(() => {
+    if (triggerExport) {
+      handleExport();
+      setTriggerExport(false);
+    }
+  }, [triggerExport]);
+
+  useEffect(() => {
+    console.log("new stage dimensions");
+    console.log(stageDimensions);
+  }, [stageDimensions]);
+
   // function to handle resize of canvas dimensions based on window width or when sidebar is closed or opened
   const handleResize = () => {
     let sceneWidth = containerRef.current.clientWidth;
     let scale = sceneWidth / stageWidth;
+
     setStageDimensions({
       width: stageWidth * scale,
       height: stageHeight * scale,
@@ -176,7 +194,7 @@ const MoodBoard = () => {
   const handleDragEnd = (e) => {};
 
   // Keep image within bounds based on the limit value
-  const handleImageBounds = (pos, shapeCurrent) => {
+  const handleImageLimitBounds = (pos, shapeCurrent) => {
     // console.log("pos: " + pos.x + " , " + pos.y);
     // console.log(shapeCurrent.getClientRect());
     const { height, width } = shapeCurrent.getClientRect();
@@ -233,13 +251,56 @@ const MoodBoard = () => {
     return className;
   };
 
+  const handleExport = () => {
+    console.log(mbItems);
+    const uri = stageRef.current.toDataURL();
+    console.log(uri);
+  };
+
+  const handleSliderChange = (event, newValue) => {
+    setSliderValue(newValue);
+
+    if (stageRef === null || newValue === sliderValue) {
+      return;
+    }
+    if (newValue > sliderValue) {
+      scaleRelativeToPoint(
+        { x: stageDimensions.width / 2, y: stageDimensions.height / 2 },
+        true
+      );
+    } else {
+      scaleRelativeToPoint(
+        { x: stageDimensions.width / 2, y: stageDimensions.height / 2 },
+        false
+      );
+    }
+  };
+
+  const scaleRelativeToPoint = (point, increaseScale) => {
+    const scaleBy = 1.05;
+    const stage = stageRef.current;
+    const oldScale = stage.scaleX();
+    const mousePointTo = {
+      x: point.x / oldScale - stage.x() / oldScale,
+      y: point.y / oldScale - stage.y() / oldScale,
+    };
+
+    const newScale = increaseScale ? oldScale * scaleBy : oldScale / scaleBy;
+
+    setStageDimensions({
+      ...stageDimensions,
+      scale: newScale,
+      x: (point.x / newScale - mousePointTo.x) * newScale,
+      y: (point.y / newScale - mousePointTo.y) * newScale,
+    });
+  };
+
   return (
     <div>
       <MoodBoardInfoContext.Provider
         value={{ stageDimensions, setStageDimensions }}
       >
         <MenuModal open={modalOpen} handleClose={handleModalClose} />
-
         <div className="workContainer">
           {/* <ItemsList
           dragUrl={dragUrl}
@@ -250,7 +311,26 @@ const MoodBoard = () => {
           resizeCanvasOnSidebarChange={resizeCanvasOnSidebarChange}
           stageRef={stageRef}
         /> */}
-
+          <div className="slider">
+            <Typography
+              component="p"
+              color="inherit"
+              align="center"
+              sx={{ transform: "translateX(-70%)" }}
+            >
+              Zoom
+            </Typography>
+            <Slider
+              size="small"
+              aria-label="Small"
+              valueLabelDisplay="auto"
+              onChange={handleSliderChange}
+              max={2}
+              min={1}
+              step={0.1}
+              value={sliderValue}
+            />
+          </div>
           <div className="canvasWrap">
             <div
               className="canvasBody"
@@ -263,6 +343,8 @@ const MoodBoard = () => {
                 height={stageDimensions.height}
                 scaleX={stageDimensions.scale}
                 scaleY={stageDimensions.scale}
+                x={stageDimensions.stageX}
+                y={stageDimensions.stageY}
                 className={handleStageClassname()}
                 ref={stageRef}
                 onMouseDown={(e) => {
@@ -290,7 +372,7 @@ const MoodBoard = () => {
                         onSelect={(e) => onSelected(e, image?.id)}
                         handleDragStart={(e) => handleDragStart(e, image?.id)}
                         handleDragEnd={handleDragEnd}
-                        handleImageBounds={handleImageBounds}
+                        handleImageBounds={handleImageLimitBounds}
                         onChange={(newAttrs) => {
                           handleTransformChange(newAttrs, i);
                         }}

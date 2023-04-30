@@ -1,7 +1,7 @@
 /** @format */
 
 import React, { useRef, useContext } from "react";
-import "./menuModal.css";
+import "../Styles/menuModal.css";
 import { Modal, Box, Typography } from "@mui/material";
 import { CSSTransition } from "react-transition-group";
 import ProductCard from "../Carousel/ProductCard";

@@ -7,16 +7,28 @@ import {
   RadioGroup,
   FormControlLabel,
   Radio,
+  Button,
 } from "@mui/material";
-import "./settingsModal.css";
-import { ThemeContext } from "../../App";
+import "../Styles/settingsModal.css";
+import { ProductItemsContext, ThemeContext } from "../../App";
 import { Themes } from "../../Theme/Constants";
+import IosShareIcon from "@mui/icons-material/IosShare";
 
-const SettingsModal = ({ open, handleClose }) => {
+const SettingsModal = ({ open, handleClose, handleCanvasExport }) => {
   const { theme, setTheme } = useContext(ThemeContext);
+  const { setTriggerExport, snackPack, setSnackPack } =
+    useContext(ProductItemsContext);
 
   const handleThemeSelection = (event) => {
     setTheme(event.target.value);
+  };
+
+  const handleSettingsModalExport = () => {
+    // Show snackbar
+    setSnackPack((prev) => [
+      ...prev,
+      { message: `Export feature coming soon!`, key: new Date().getTime() },
+    ]);
   };
 
   return (
@@ -26,7 +38,6 @@ const SettingsModal = ({ open, handleClose }) => {
           variant="h3"
           component="div"
           style={{
-            textAlign: "center",
             marginTop: "10px",
             marginBottom: "20px",
           }}
@@ -37,7 +48,6 @@ const SettingsModal = ({ open, handleClose }) => {
           variant="p"
           component="div"
           style={{
-            textAlign: "center",
             marginBottom: "10px",
             fontSize: "10px",
           }}
@@ -50,7 +60,7 @@ const SettingsModal = ({ open, handleClose }) => {
           name="row-radio-buttons-group"
           onChange={handleThemeSelection}
           value={theme}
-          style={{ textAlign: "center", justifyContent: "center" }}
+          style={{ justifyContent: "center", marginBottom: "10px" }}
         >
           <FormControlLabel
             value={Themes.WHITE}
@@ -71,6 +81,17 @@ const SettingsModal = ({ open, handleClose }) => {
             labelPlacement="top"
           />
         </RadioGroup>
+        <Button
+          variant="outlined"
+          startIcon={<IosShareIcon />}
+          style={{ justifyContent: "center" }}
+          onClick={() => {
+            handleSettingsModalExport();
+            setTriggerExport(true);
+          }}
+        >
+          Export
+        </Button>
       </div>
     </Modal>
   );

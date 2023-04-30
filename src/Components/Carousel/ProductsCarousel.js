@@ -4,7 +4,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { ProductItemsContext } from "../../App";
 import ProductCard from "../Carousel/ProductCard";
 import Flickity from "react-flickity-component";
-import "./flickity.css";
+import "../Styles/flickity.css";
 import {
   CircularProgress,
   TextField,

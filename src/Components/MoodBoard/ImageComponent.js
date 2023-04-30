@@ -20,7 +20,7 @@ const ImageComponent = ({
   handleImageBounds,
 }) => {
   // creating image based on its src
-  const [img] = useImage(image?.src);
+  const [img] = useImage(image?.src, "anonymous");
   const shapeRef = useRef();
   const transformRef = useRef();
 

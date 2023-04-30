@@ -1,10 +1,10 @@
 /** @format */
 
 import React, { useState, useEffect, createContext } from "react";
-import MoodBoard from "./Components/MoodBoard/MoodBoard";
 import { Typography, Snackbar, Alert, Fab } from "@mui/material";
 import WooCommerceRestApi from "@woocommerce/woocommerce-rest-api";
 import { Settings } from "@mui/icons-material";
+import MoodBoard from "./Components/MoodBoard/MoodBoard";
 import SettingsModal from "./Components/Modal/SettingsModal";
 import { Themes } from "./Theme/Constants";
 import "./Components/Styles/app.css";
@@ -23,12 +23,14 @@ const api = new WooCommerceRestApi({
 function App() {
   const [items, setItems] = useState([]);
   const [itemsLoaded, setItemsLoaded] = useState(false);
+  const [errorLoadingItems, setErrorLoadingItems] = useState(false);
   const [mbItems, setMbItems] = useState([]);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackPack, setSnackPack] = React.useState([]);
   const [messageInfo, setMessageInfo] = React.useState(undefined);
   const [settingsModalOpen, setSettingsModalOpen] = useState(false);
   const [theme, setTheme] = useState(Themes.WHITE);
+  const [triggerExport, setTriggerExport] = useState(false);
 
   useEffect(() => {
     getProductsFromWooCommerce();
@@ -124,6 +126,9 @@ function App() {
             setMbItems,
             snackPack,
             setSnackPack,
+            triggerExport,
+            setTriggerExport,
+            errorLoadingItems,
           }}
         >
           <Typography
@@ -136,14 +141,23 @@ function App() {
           >
             The Mood Board
           </Typography>
-          <div className="settings-button">
-            <Fab
-              color="white"
-              aria-label="add"
-              onClick={handleOpenSettingsModal}
-            >
-              <Settings />
-            </Fab>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              position: "relative",
+            }}
+          >
+            <div className="settings-button">
+              <Fab
+                color="white"
+                aria-label="add"
+                onClick={handleOpenSettingsModal}
+              >
+                <Settings />
+              </Fab>
+            </div>
           </div>
           <MoodBoard />
           <Snackbar
@@ -159,6 +173,7 @@ function App() {
           </Snackbar>
           <SettingsModal
             open={settingsModalOpen}
+            // handleCanvasExport={handleCanvasExport}
             handleClose={() => setSettingsModalOpen(false)}
           />
         </ProductItemsContext.Provider>
