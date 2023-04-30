@@ -131,7 +131,7 @@ function App() {
             errorLoadingItems,
           }}
         >
-          <Typography
+          {/* <Typography
             component="h2"
             variant="h5"
             color="inherit"
@@ -140,7 +140,7 @@ function App() {
             sx={{ flex: 1 }}
           >
             The Mood Board
-          </Typography>
+          </Typography> */}
           <div
             style={{
               display: "flex",

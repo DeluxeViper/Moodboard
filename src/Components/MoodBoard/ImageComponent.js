@@ -1,7 +1,7 @@
 /** @format */
 
 import React, { useRef, useEffect, Fragment } from "react";
-import { Image, Path, Transformer } from "react-konva";
+import { Image, Path, Transformer, Circle } from "react-konva";
 import useImage from "use-image";
 import "../Styles/canvas.css";
 import { Fab } from "@mui/material";
@@ -101,6 +101,19 @@ const ImageComponent = ({
           }}
           zIndex={500}
         >
+          <Circle
+            x={40}
+            y={45}
+            stroke="white"
+            fill="white"
+            radius={30}
+            shadowColor="black"
+            shadowBlur="4"
+            shadowOffsetX={4}
+            shadowOffsetY={4}
+            shadowOpacity={0.5}
+            onClick={() => handleOnDelete(img.src)}
+          />
           <Path
             fill="black"
             x={30}
