@@ -2,14 +2,17 @@
 
 .beigeBackground {
   background-color: rgb(227, 217, 198) !important;
+  margin-top: 60px;
 }
 
 .whiteBackground {
   background-color: #fff !important;
+  margin-top: 60px;
 }
 
 .blackBackground {
   background-color: #1f1f1f !important;
   border-color: #fff;
   color: #fff;
+  margin-top: 60px;
 }

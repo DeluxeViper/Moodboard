@@ -49,21 +49,20 @@ const ProductCard = ({ item }) => {
         marginTop: "5px",
         marginBottom: "5px",
         marginRight: "10px",
-        height: 380,
+        height: 500,
       }}
     >
       <CardMedia
         component="img"
         image={src}
         alt={alt}
-        height={250}
         sx={{ padding: "2px", objectFit: "contain" }}
       />
       <CardContent>
-        <Typography variantBottom="h5" component="div">
+        <Typography variantBottom="h3" component="div">
           {alt}
         </Typography>
-        <Typography variantBottom="p" component="div">
+        <Typography variantBottom="h4" component="div">
           {price}
         </Typography>
         <Button

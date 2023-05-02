@@ -38,8 +38,8 @@ const ImagesSection = (props) => {
                 product.name !== "Reverse Withdrawal Payment" &&
                 product.images
               ) {
-                console.log("product:");
-                console.log(product);
+                // console.log("product:");
+                // console.log(product);
                 product.images.forEach((image) => {
                   setItems((oldItems) => [...oldItems, image]);
                 });
@@ -87,7 +87,7 @@ const ImagesSection = (props) => {
                 props.onChangeDragUrl(e.target.src, item.id);
               }}
               onClick={(e) => {
-                console.log(e.target);
+                // console.log(e.target);
                 props.handleAddOnClick(e.target.src, item.id);
               }}
             />

@@ -1,6 +1,10 @@
-/* ! Flickity v2.1.2
-https://flickity.metafizzy.co
----------------------------------------------- */
+/**
+ * ! Flickity v2.1.2
+ * https://flickity.metafizzy.co
+ * ----------------------------------------------
+ *
+ * @format
+ */
 
 .flickity-enabled {
   position: relative;
@@ -118,7 +122,7 @@ https://flickity.metafizzy.co
 .flickity-page-dots {
   position: absolute;
   width: 100%;
-  bottom: -25px;
+  bottom: -40px !important;
   padding: 0;
   margin: 0;
   list-style: none;

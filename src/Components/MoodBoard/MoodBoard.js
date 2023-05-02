@@ -62,11 +62,6 @@ const MoodBoard = () => {
     }
   }, [triggerExport]);
 
-  useEffect(() => {
-    console.log("new stage dimensions");
-    console.log(stageDimensions);
-  }, [stageDimensions]);
-
   // function to handle resize of canvas dimensions based on window width or when sidebar is closed or opened
   const handleResize = () => {
     let sceneWidth = containerRef.current.clientWidth;
@@ -251,9 +246,9 @@ const MoodBoard = () => {
   };
 
   const handleExport = () => {
-    console.log(mbItems);
+    // console.log(mbItems);
     const uri = stageRef.current.toDataURL();
-    console.log(uri);
+    // console.log(uri);
   };
 
   const handleSliderChange = (event, newValue) => {
@@ -313,13 +308,14 @@ const MoodBoard = () => {
           <div className="slider">
             <Typography
               component="p"
-              color="inherit"
+              color={mbItems && mbItems.length === 0 ? "black" : "inherit"}
               align="center"
               sx={{ transform: "translateX(-70%)" }}
             >
               Zoom
             </Typography>
             <Slider
+              disabled={mbItems && mbItems.length === 0}
               size="small"
               aria-label="Small"
               valueLabelDisplay="auto"

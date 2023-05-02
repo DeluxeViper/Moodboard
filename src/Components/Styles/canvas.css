@@ -7,6 +7,7 @@
   height: 100%;
   display: flex;
   flex-direction: column;
+  margin-bottom: 20px;
 }
 .canvasWrap {
   display: flex;
@@ -52,7 +53,7 @@
   width: 15% !important;
   margin-right: 10px;
   align-items: center;
-  transform: translate(0px, -30rem);
+  transform: translate(0px, -53rem);
 }
 
 @media screen and (max-width: 1024px) {
@@ -88,4 +89,14 @@ polygon.arrow-middle {
 }
 polygon.arrow-top {
   opacity: 0.5;
+}
+
+@keyframes arrow-animation {
+  from {
+    fill: #000;
+    transition: all 0.2s ease-out;
+  }
+  to {
+    transition: all 0.2s ease-out;
+  }
 }
