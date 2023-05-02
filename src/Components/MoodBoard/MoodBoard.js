@@ -247,7 +247,7 @@ const MoodBoard = () => {
 
   const handleExport = () => {
     // console.log(mbItems);
-    const uri = stageRef.current.toDataURL();
+    // const uri = stageRef.current.toDataURL();
     // console.log(uri);
   };
 

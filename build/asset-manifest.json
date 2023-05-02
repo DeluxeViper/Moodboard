@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "/wp-content/reactpress/apps/react-konva-moodboard/build/static/css/main.f7f55c99.chunk.css",
-    "main.js": "/wp-content/reactpress/apps/react-konva-moodboard/build/static/js/main.14648452.chunk.js",
-    "main.js.map": "/wp-content/reactpress/apps/react-konva-moodboard/build/static/js/main.14648452.chunk.js.map",
+    "main.css": "/wp-content/reactpress/apps/react-konva-moodboard/build/static/css/main.602e56d6.chunk.css",
+    "main.js": "/wp-content/reactpress/apps/react-konva-moodboard/build/static/js/main.d88be0de.chunk.js",
+    "main.js.map": "/wp-content/reactpress/apps/react-konva-moodboard/build/static/js/main.d88be0de.chunk.js.map",
     "runtime-main.js": "/wp-content/reactpress/apps/react-konva-moodboard/build/static/js/runtime-main.c3dedfca.js",
     "runtime-main.js.map": "/wp-content/reactpress/apps/react-konva-moodboard/build/static/js/runtime-main.c3dedfca.js.map",
     "static/js/2.e465fb44.chunk.js": "/wp-content/reactpress/apps/react-konva-moodboard/build/static/js/2.e465fb44.chunk.js",
     "static/js/2.e465fb44.chunk.js.map": "/wp-content/reactpress/apps/react-konva-moodboard/build/static/js/2.e465fb44.chunk.js.map",
     "index.html": "/wp-content/reactpress/apps/react-konva-moodboard/build/index.html",
-    "static/css/main.f7f55c99.chunk.css.map": "/wp-content/reactpress/apps/react-konva-moodboard/build/static/css/main.f7f55c99.chunk.css.map",
+    "static/css/main.602e56d6.chunk.css.map": "/wp-content/reactpress/apps/react-konva-moodboard/build/static/css/main.602e56d6.chunk.css.map",
     "static/js/2.e465fb44.chunk.js.LICENSE.txt": "/wp-content/reactpress/apps/react-konva-moodboard/build/static/js/2.e465fb44.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.c3dedfca.js",
     "static/js/2.e465fb44.chunk.js",
-    "static/css/main.f7f55c99.chunk.css",
-    "static/js/main.14648452.chunk.js"
+    "static/css/main.602e56d6.chunk.css",
+    "static/js/main.d88be0de.chunk.js"
   ]
 }
